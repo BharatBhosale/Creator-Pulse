@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="creater-pulse">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/creater-pulse.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
