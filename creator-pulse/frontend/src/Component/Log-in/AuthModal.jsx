@@ -8,7 +8,7 @@ const AuthModal = ({ closeModal, onLogin }) => {
     e.preventDefault();
     // here you can add validation later
     onLogin();      // mark user as logged in (App state)
-    closeModal();   // close the modal
+    closeModal();   
   };
 
   return (
