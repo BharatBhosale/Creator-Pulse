@@ -14,6 +14,10 @@
   justify-content: space-between;
   background: #ffffff;
   border-bottom: 1px solid #eeeeee;
+   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  position: fixed;
+  top: 0;
+  z-index: 11;
 }
 
 .nav-l {
@@ -51,6 +55,14 @@
   box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
 }
 
+.menu-toggle {
+  display: none;           /* desktop: hide */
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;    /* above sidebar */
+}
+
 @media (max-width: 600px) {
   .navbar {
     padding: 0 16px;
@@ -64,4 +76,9 @@
     padding: 8px 18px;
     font-size: 14px;
   }
+
+  .menu-toggle {
+    display: block;
+  }
 }
+

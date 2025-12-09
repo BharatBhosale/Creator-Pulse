@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./AuthModal.css";
+import "./style.css";
 
 const AuthModal = ({ closeModal, onLogin }) => {
   const [isLogin, setIsLogin] = useState(true);

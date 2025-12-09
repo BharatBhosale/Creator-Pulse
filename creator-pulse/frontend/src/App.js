@@ -1,29 +1,22 @@
 import "./App.css";
 import { useState } from "react";
 
-import Navbar from "./Component/Navbar/Navbar";
-import ImageAnimation from "./Component/Body/ImageAnimation";
-import Footer from "./Component/Footer/Footer";
+ 
+import Navbar from "./Component/Navbar";
+import Blog from "./Component/Blog";
+import Footer from "./Component/Footer";
+import Sidebar from "./Component/Sidebar";
 
 function App() {
+  const [isblogVisible, setIsBlogVisible] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   return (
-    <>
-      {/* Navbar always visible */}
-      <Navbar
-        isLoggedIn={isLoggedIn}
-        onLogin={() => setIsLoggedIn(true)}
-        onLogout={() => setIsLoggedIn(false)}
-      />
-
-      {/* Middle part hidden ONLY after login */}
-      {!isLoggedIn && <ImageAnimation />}
-
-      {/* Footer ALWAYS visible */}
+    <div className="App">
+      <Navbar isLoggedIn={isLoggedIn} setIsBlogVisible={setIsBlogVisible} setIsLoggedIn={setIsLoggedIn}/>
+      {isblogVisible ? <Blog/> : <Sidebar/>}
       <Footer />
-    </>
-  );
+    </div>
+  ); 
 }
 
 export default App;

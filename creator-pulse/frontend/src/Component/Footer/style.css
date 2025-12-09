@@ -4,6 +4,9 @@
   background-color: black;
   border-top: 1px solid #eaeaea;
   text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }
 
 .footer p {
