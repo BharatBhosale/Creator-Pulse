@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import AuthModal from "../Log-in/AuthModal"; // 🔁 change path if folder name different
-import "./Navbar.css";
+import AuthModal from "../Log-in"; // 🔁 change path if folder name different
+import "./style.css";
 
-const Navbar = ({ isLoggedIn, onLogin, onLogout }) => {
+const Navbar = ({ isLoggedIn, setIsBlogVisible, setIsLoggedIn }) => {
   const [showAuth, setShowAuth] = useState(false);
 
   const handleLoginClick = () => {
-    setShowAuth(true);
+    setIsBlogVisible(false);
+    setIsLoggedIn(true); // hide blog when login modal opens
   };
 
   const handleCloseModal = () => {
@@ -14,13 +15,18 @@ const Navbar = ({ isLoggedIn, onLogin, onLogout }) => {
   };
 
   const handleLoggedInFromModal = () => {
-    onLogin();          // tell App user is logged in
-    setShowAuth(false); // close modal
+    // onLogin(); // tell App user is logged in
+    // setShowAuth(false); // close modal
+  };
+  const hadleLogoutClick = () => {
+    setIsLoggedIn(false);
+    setIsBlogVisible(true); // show blog after logout
   };
 
   return (
     <>
       <nav className="navbar">
+        <button className="menu-toggle">☰</button>
         <div className="nav-l">
           <span className="icon">▶</span>
           <span className="app-name">Creator Pulse</span>
@@ -32,7 +38,7 @@ const Navbar = ({ isLoggedIn, onLogin, onLogout }) => {
               Login
             </button>
           ) : (
-            <button className="login-btn" onClick={onLogout}>
+            <button className="login-btn" onClick={hadleLogoutClick}>
               Logout
             </button>
           )}
