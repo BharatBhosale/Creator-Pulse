@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import AuthModal from "../Log-in"; // 🔁 change path if folder name different
+import Sidebar from "../Sidebar";
 import "./style.css";
 
 const Navbar = ({ isLoggedIn, setIsBlogVisible, setIsLoggedIn }) => {
   const [showAuth, setShowAuth] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLoginClick = () => {
     setIsBlogVisible(false);
@@ -26,7 +28,7 @@ const Navbar = ({ isLoggedIn, setIsBlogVisible, setIsLoggedIn }) => {
   return (
     <>
       <nav className="navbar">
-        <button className="menu-toggle">☰</button>
+        <button className="menu-toggle" aria-label="Open menu" onClick={() => setSidebarOpen(true)}>☰</button>
         <div className="nav-l">
           <span className="icon">▶</span>
           <span className="app-name">Creator Pulse</span>
@@ -44,6 +46,12 @@ const Navbar = ({ isLoggedIn, setIsBlogVisible, setIsLoggedIn }) => {
           )}
         </div>
       </nav>
+
+      {/* Mobile sidebar overlay */}
+      <div className={`overlay ${sidebarOpen ? "open" : ""}`} onClick={() => setSidebarOpen(false)} />
+
+      {/* Sidebar component (mobile) */}
+      <Sidebar mobile open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Show login/signup modal only when not logged in */}
       {!isLoggedIn && showAuth && (

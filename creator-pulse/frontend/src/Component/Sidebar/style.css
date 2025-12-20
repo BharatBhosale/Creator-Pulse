@@ -1,51 +1,58 @@
-/* ===== SIDEBAR ===== */
-
 .sidebar {
   width: 200px;
-  height: calc(100vh - 128px); 
-  background: #ffffff;
+  height: calc(102.9vh - 128px); 
+  background: white;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
   position: fixed;
-  top: 69px;
+  top: 50px;
   left: 0;
   z-index: 10;
-  /* Desktop: always visible */
+  
 }
 
-/* Sidebar content */
+.mobile-only {
+  display: none;
+}
+
 .sidebar-content {
   padding: 2rem;
 }
 
-/* Close button – hidden on desktop */
+.sidebar-item {
+  display: block;
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.sidebar-item:hover {
+  color: #3a9c5a;
+}
+
 .close-btn {
   display: none;
 }
 
-
-/* ===== MENU TOGGLE (☰) – HIDDEN ON DESKTOP ===== */
-
-
-
-
-/* ===== MOBILE BEHAVIOR ===== */
-
 @media (max-width: 768px) {
-  /* On mobile: sidebar is hidden by default */
-  .sidebar {
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
+  .mobile-only {
+    display: block;
   }
 
-  /* When open=true, show sidebar */
+  .sidebar {
+    width: 240px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 10;
+  }
+
   .sidebar.open {
     transform: translateX(0);
   }
 
-  /* Show ☰ on mobile */
-  
-
-  /* Show X inside sidebar on mobile */
   .close-btn {
     display: block;
     position: absolute;
