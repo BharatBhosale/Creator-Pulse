@@ -1,23 +1,23 @@
 import React from "react";
 import "./style.css";
 
-const Sidebar = ({ open, onClose }) => {
+const Sidebar = ({ open, onClose, mobile }) => {
   return (
     <>
-      <aside className={`sidebar ${open ? "open" : ""}`}>
-      {/* ✕ close button – will be hidden on desktop via CSS */}
-      <button className="close-btn" onClick={onClose}>
-        ✕
-      </button>
-
-      {/* Your sidebar content here */}
-      <div className="sidebar-content">
-        {/* example items */}
-        <p>Dashboard</p>
-        <p>Analytics</p>
-        <p>Settings</p>
-      </div>
-    </aside>
+      <aside
+        className={`sidebar ${mobile ? "mobile-only" : ""} ${
+          open ? "open" : ""
+        }`}
+      >       
+        <button className="close-btn" onClick={onClose}>
+          ✕
+        </button>
+        <div className="sidebar-content">
+          <p>Dashboard</p>
+          <p>Analytics</p>
+          <p>Settings</p>
+        </div>
+      </aside>
     </>
   );
 };

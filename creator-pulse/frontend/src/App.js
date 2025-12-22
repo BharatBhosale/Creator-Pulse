@@ -3,9 +3,9 @@ import { useState } from "react";
 
  
 import Navbar from "./Component/Navbar";
-import Blog from "./Component/Blog";
 import Footer from "./Component/Footer";
 import Sidebar from "./Component/Sidebar";
+import MainSection from "./Component/MainSection";
 
 function App() {
   const [isblogVisible, setIsBlogVisible] = useState(true);
@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <Navbar isLoggedIn={isLoggedIn} setIsBlogVisible={setIsBlogVisible} setIsLoggedIn={setIsLoggedIn}/>
-      {isblogVisible ? <Blog/> : <Sidebar/>}
+      {isblogVisible ? <MainSection/> : <Sidebar/>}
       <Footer />
     </div>
   ); 

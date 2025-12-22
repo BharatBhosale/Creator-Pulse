@@ -1,18 +1,11 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", Arial, sans-serif;
-}
-
 .navbar {
   width: 100%;
-  height: 70px;
+  height: 50px;
   padding: 0 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #ffffff;
+  background: #A3D78A;
   border-bottom: 1px solid #eeeeee;
    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
   position: fixed;
@@ -38,10 +31,11 @@
 }
 
 .login-btn {
-  background: #ff0000;
+  background: black;
+  margin-right: 55px;
   color: #ffffff;
   border: none;
-  padding: 10px 22px;
+  padding: 8px 11px;
   border-radius: 8px;
   font-size: 15px;
   font-weight: 600;
@@ -56,14 +50,14 @@
 }
 
 .menu-toggle {
-  display: none;           /* desktop: hide */
+  display: none;           
   font-size: 24px;
   background: none;
   border: none;
-  cursor: pointer;    /* above sidebar */
+  cursor: pointer;    
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .navbar {
     padding: 0 16px;
   }
@@ -80,5 +74,21 @@
   .menu-toggle {
     display: block;
   }
+}
+
+/* overlay that appears when sidebar is open on mobile */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 9;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.overlay.open {
+  opacity: 1;
+  pointer-events: auto;
 }
 
