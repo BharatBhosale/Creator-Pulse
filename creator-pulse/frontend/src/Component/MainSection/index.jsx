@@ -1,9 +1,9 @@
-
+import "./style.css"
 
 const MainSection = () => {
   return (
     <>
-      <img src="/Image/youtube-image4.png" alt="youtube" />
+      <img className="image" src="/Image/youtube-image4.png" alt="youtube" />
     </>
   );
 };
