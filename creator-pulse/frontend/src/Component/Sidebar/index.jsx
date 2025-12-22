@@ -13,7 +13,6 @@ const Sidebar = ({ open, onClose, mobile }) => {
           ✕
         </button>
         <div className="sidebar-content">
-          
           <p>Dashboard</p>
           <p>Analytics</p>
           <p>Settings</p>
