@@ -1,6 +1,49 @@
-.App {
-  background-color: #f0f0f0;
-    width: 100vw;
-    height: 100vh;
+/* Global reset for layout and box-sizing to avoid unexpected overflow */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+.App {
+  background-color: #f0f0f0;
+  width: 100%; /* avoid 100vw (can cause horizontal scrollbar on some systems) */
+  min-height: 100vh;
+  display: block;
+}
+
+/* Layout when sidebar is visible (desktop) */
+.layout {
+  display: block;
+}
+
+/* main content area: offset to the right of the fixed sidebar and below navbar */
+.main-content {
+  margin-left: 200px; /* width of the sidebar */
+  padding: 80px 24px 100px; /* top padding for navbar (50px) + spacing, bottom padding for footer */
+  min-height: calc(100vh - 50px - 56px);
+  box-sizing: border-box; /* include padding in min-height calculation */
+  overflow-y: auto; /* scroll only inside content area, not the whole page */
+}
+
+/* ensure images and wide elements don't cause overflow */
+.main-content img, .main-content video, .main-content iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* full-width main (used when logged out) */
+.main-content.main-full {
+  margin-left: 0;
+  padding: 70px 24px 100px;
+}
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding: 70px 16px 90px;
+  }
+}
