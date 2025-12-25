@@ -1,41 +1,42 @@
 package com.mit.service;
 
 import org.springframework.stereotype.Service;
-import com.google.gson.JsonObject;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class AnalyticsService {
 
-    // Video analysis service method
-    public Object videoAnalysis(JsonObject jsonObject) {
+    public Map<String, Object> videoAnalysis(Map<String, Double> payload) {
 
-        // Example: read data from request body
-        String videoUrl = jsonObject.get("videoUrl").getAsString();
+        double ctr = payload.get("ctr");
+        double ar = payload.get("ar");
 
-        // TODO: add real YouTube analytics logic here
-        // (API call, processing, DB save, etc.)
-
-        JsonObject response = new JsonObject();
-        response.addProperty("type", "video");
-        response.addProperty("videoUrl", videoUrl);
-        response.addProperty("message", "Video analysis completed");
-
+        String result;
+        if (ctr > 50) {
+            result = "Good performance";
+        } else {
+            result = "Needs improvement";
+        }
+        Map<String, Object> response = new HashMap<>();
+        response.put("result", result);
         return response;
     }
 
-    // Short analysis service method
-    public Object shortAnalysis(JsonObject jsonObject) {
+    public Map<String, Object> shortAnalysis(Map<String, Double> payload) {
 
-        // Example: read data from request body
-        String shortUrl = jsonObject.get("shortUrl").getAsString();
+        double ctr = payload.get("sa");
+        double ar = payload.get("ar");
 
-        // TODO: add real Shorts analytics logic here
+        String result;
+        if (ar > 50) {
+            result = "Good performance";
+        } else {
+            result = "Needs improvement";
+        }
 
-        JsonObject response = new JsonObject();
-        response.addProperty("type", "short");
-        response.addProperty("shortUrl", shortUrl);
-        response.addProperty("message", "Short analysis completed");
-
+        Map<String, Object> response = new HashMap<>();
+        response.put("result", result);
         return response;
     }
 }
