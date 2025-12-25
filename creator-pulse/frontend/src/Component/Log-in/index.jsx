@@ -1,77 +1,84 @@
 import React, { useState } from "react";
 import "./style.css";
 
-const AuthModal = ({
-  closeModal,
-  onLogin,
-  inline = false,
-  setIsLoggedIn,
-  setNavSelection,
-  setIsBlogVisible,
-}) => {
+const AuthModal = ({ setIsLoggedIn, setNavSelection }) => {
   const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // here you can add validation later
-    if (onLogin) onLogin();
-    if (setIsLoggedIn) setIsLoggedIn(true);
-    if (setIsBlogVisible) setIsBlogVisible(true);
-    if (setNavSelection) setNavSelection("Home");
-    if (!inline && closeModal) closeModal();
-  };
 
-  const handleToggle = () => {
-    if (inline && setNavSelection) {
-      // navigate to Register page when inline
-      setNavSelection(isLogin ? "Register" : "LogIn");
-    } else {
-      setIsLogin(!isLogin);
+    const url = isLogin
+      ? "http://localhost:8080/user/login"
+      : "http://localhost:8080/user/register";
+
+    const payload = isLogin
+      ? { emailId: email, password }
+      : { fullName: name, emailId: email, password };
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const text = await response.text();
+
+      if (!response.ok) {
+        alert(text); // shows backend error
+        return;
+      }
+
+      // ✅ SUCCESS
+      const data = JSON.parse(text);
+
+      if (isLogin) {
+        alert("Login successful!");
+        setIsLoggedIn(true);
+        setNavSelection("Home");
+      } else {
+        alert("Registration successful! Please login.");
+        setIsLogin(true);
+      }
+    } catch (err) {
+      alert("Server error. Please try again.");
     }
   };
 
-  if (inline) {
-    return (
-      <section className="auth-page">
-        <div className="modal-box">
-          <h2>{isLogin ? "Login" : "Create Account"}</h2>
-
-          <form onSubmit={handleSubmit} className="auth-form">
-            {!isLogin && <input type="text" placeholder="Full Name" required />}
-
-            <input type="email" placeholder="Email" required />
-            <input type="password" placeholder="Password" required />
-
-            <button type="submit" className="submit-btn">
-              {isLogin ? "Login" : "Create Account"}
-            </button>
-          </form>
-
-          <p className="toggle-text">
-            {isLogin ? "New user?" : "Already have an account?"}
-            <button className="link-btn" onClick={handleToggle}>
-              {isLogin ? " Sign Up" : " Login"}
-            </button>
-          </p>
-        </div>
-      </section>
-    );
-  }
-
   return (
-    <div className="modal-overlay">
-      <div className="modal-box">
-        <span className="close-btn" onClick={closeModal}>
-          ×
-        </span>
-
+    <section className="auth-page">
+      <div className="auth-card">
         <h2>{isLogin ? "Login" : "Create Account"}</h2>
 
         <form onSubmit={handleSubmit} className="auth-form">
-          {!isLogin && <input type="text" placeholder="Full Name" required />}
+          {!isLogin && (
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          )}
 
-          <input type="email" placeholder="Email" required />
-          <input type="password" placeholder="Password" required />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
           <button type="submit" className="submit-btn">
             {isLogin ? "Login" : "Create Account"}
@@ -85,7 +92,7 @@ const AuthModal = ({
           </span>
         </p>
       </div>
-    </div>
+    </section>
   );
 };
 
