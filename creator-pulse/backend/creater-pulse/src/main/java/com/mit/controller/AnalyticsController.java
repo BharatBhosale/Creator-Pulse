@@ -1,15 +1,14 @@
 package com.mit.controller;
 
-import java.util.List;
-
 import org.springframework.web.bind.annotation.*;
-
-import com.mit.service.AnalyticsService;
 import org.springframework.http.ResponseEntity;
+import java.util.Map;
 
+import com.google.gson.JsonObject;
+import com.mit.service.AnalyticsService;
 
 @RestController
-@RequestMapping("/anlysis")
+@RequestMapping("/analysis")
 public class AnalyticsController {
 
     private final AnalyticsService service;
@@ -19,25 +18,12 @@ public class AnalyticsController {
     }
 
     @PostMapping("/video")
-    public ResponseEntity<?> videoAnalysis(@RequestBody JsonObject jsonObject) {
-        try {
-            return ResponseEntity.ok(service.videoAnalysis(jsonObject));
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<?> videoAnalysis(@RequestBody Map<String, Double> payload) {
+        return ResponseEntity.ok(service.videoAnalysis(payload));
     }
 
     @PostMapping("/short")
-    public ResponseEntity<?> shortAnalysis(@RequestBody JsonObject jsonObject) {
-        try {
-            return ResponseEntity.ok(service.shortAnalysis(jsonObject));
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<?> shortAnalysis(@RequestBody Map<String, Double> payload) {
+        return ResponseEntity.ok(service.shortAnalysis(payload));
     }
-
-
 }
-
-
-
