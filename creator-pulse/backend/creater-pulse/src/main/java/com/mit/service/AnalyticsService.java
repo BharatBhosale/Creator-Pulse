@@ -28,6 +28,7 @@ public class AnalyticsService {
         double ctr = payload.get("sa");
         double ar = payload.get("ar");
 
+
         String result;
         if (ar > 50) {
             result = "Good performance";

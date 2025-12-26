@@ -116,3 +116,60 @@ n.input-row {
   margin-top: 8px;
   font-style: italic;
 }
+
+
+
+.result-container {
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0f172a, #020617);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.result-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #38bdf8;
+  margin-bottom: 12px;
+}
+
+.result-box {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 16px;
+  color: #e5e7eb;
+}
+
+.result-box p {
+  margin: 8px 0;
+}
+
+.analysis-inputs{
+  margin: 10px;
+  gap: 8px;
+}
+
+.input-video{
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  gap: 10px;
+  margin: 5px;
+}
+
+/* subtle animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

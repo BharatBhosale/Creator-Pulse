@@ -1,6 +1,6 @@
 .navbar {
   width: 100%;
-  height: 50px;
+  height: 54px;
   padding: 0 32px;
   display: flex;
   align-items: center;
@@ -17,24 +17,42 @@
 .nav-l {
   display: flex;
   align-items: center;
-  gap: 10px;
+  
 }
 
 .icon {
-  color: #cc0000; 
-  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
 }
 
-.app-name {
-  font-size: 20px;
-  font-weight: 600;
-  color: #000000;
-  letter-spacing: 0.2px;
+.icon img {
+  width: 40px;          /* adjust size if needed */
+  height: 40px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.app-name  {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.app-name  img {
+  width: 250px;          /* adjust size if needed */
+  /* height: 250px; */
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
 .login-btn {
   background: #000000; 
-  margin-right: 55px;
+  
   color: #ffffff; 
   border: none;
   padding: 8px 11px;
