@@ -73,9 +73,9 @@ p {
   border: 1px solid #eee;
 }
 
-.video-card h3 {
+.tag-name{
   margin-bottom: 12px;
-  font-size: 18px;
+  font-size: 25px;
   color: #111;
 }
 

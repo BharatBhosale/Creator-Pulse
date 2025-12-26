@@ -69,7 +69,7 @@ const TagGenerator = () => {
 
   return (
     <div className="video-analytics-wrapper">
-      <h2>YouTube Video Tag Fetcher</h2>
+      <h2 className="tag-name">YouTube SEO Tags</h2>
 
       <div className="input-row">
         <input
@@ -80,7 +80,7 @@ const TagGenerator = () => {
           onKeyDown={(e) => e.key === "Enter" && fetchVideoTags()}
         />
         <button className="fetch-btn" onClick={fetchVideoTags}>
-          Fetch
+          Get Video Tags
         </button>
       </div>
 

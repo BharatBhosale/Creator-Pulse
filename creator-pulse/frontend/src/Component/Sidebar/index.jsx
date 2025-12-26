@@ -15,7 +15,7 @@ const Sidebar = ({ open, onClose, mobile, navSelection, setNavSelection }) => {
     },
     {
       key: "TrendingTags",
-      label: "Trending Tag Generator",
+      label: "YouTube SEO Tags",
       icon: <img src="/Image/tag.png" alt="Tags" />,
     },
     {

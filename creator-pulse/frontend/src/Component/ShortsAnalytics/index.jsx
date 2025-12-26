@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./style.css";
 
 const API_KEY = "AIzaSyB9F1gROqetXScoAf1vFKBNokz4mVTixU4";
 
 const extractVideoID = (text) => {
   if (!text) return null;
-  text = text.trim();
-
-  if (text.length === 11) return text;
-  if (text.includes("/shorts/"))
-    return text.split("/shorts/")[1].substring(0, 11);
-  if (text.includes("v="))
-    return text.split("v=")[1].substring(0, 11);
-  if (text.includes("youtu.be/"))
-    return text.split("youtu.be/")[1].substring(0, 11);
-
+  if (text.includes("youtube.com/shorts/"))
+    return text.split("shorts/")[1].split("?")[0];
   return null;
 };
 
@@ -25,67 +17,75 @@ const getSeconds = (iso) => {
   return h * 3600 + m * 60 + Number(s);
 };
 
-const formatDuration = (sec) => {
-  if (sec < 60) return `${sec}s`;
-  return `${Math.floor(sec / 60)}m ${sec % 60}s`;
-};
+const formatDuration = (sec) =>
+  sec < 60 ? `${sec}s` : `${Math.floor(sec / 60)}m ${sec % 60}s`;
 
-
-const ShortsAnalytics = () => {
-  const [urlInput, setUrlInput] = useState("");
-  const [videoId, setVideoId] = useState("");
+export default function ShortsAnalytics() {
+  const [url, setUrl] = useState("");
   const [video, setVideo] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [audience, setAudience] = useState("");
+  const [swipe, setSwipe] = useState("");
+  const [result, setResult] = useState("");
+  const [watchTime, setWatchTime] = useState("");
   const [error, setError] = useState("");
-  const [showFullDesc, setShowFullDesc] = useState(false);
 
-useEffect(() => {
-  const saved = localStorage.getItem("shortsAnalyticsDB");
-  if (saved) {
-    const data = JSON.parse(saved);
-    setUrlInput(data.videoId);
-    setVideoId(data.videoId);
-    setVideo(data.video);
-  }
-}, []);
+  const fetchVideo = async () => {
+    const id = extractVideoID(url);
 
-
-  useEffect(() => {
-    if (!videoId) return;
-
-    setLoading(true);
-    setError("");
-    setShowFullDesc(false);
-
-    fetch(
-      `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&id=${videoId}&key=${API_KEY}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.items?.length > 0) {
-          const v = data.items[0];
-          setVideo(v);
-
-localStorage.setItem(
-  "shortsAnalyticsDB",
-  JSON.stringify({ videoId, video: v })
-);
-
-        } else {
-          setError("No Shorts video found");
-        }
-      })
-      .catch(() => setError("Failed to fetch Shorts data"))
-      .finally(() => setLoading(false));
-  }, [videoId]);
-
-  const handleFetch = () => {
-    const id = extractVideoID(urlInput);
     if (!id) {
-      setError("Please enter a valid YouTube Shorts link or ID");
+      setError("❌ Please enter a valid YouTube Shorts link only.");
       return;
     }
-    setVideoId(id);
+
+    setError("");
+
+    try {
+      const res = await fetch(
+        `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&id=${id}&key=${API_KEY}`
+      );
+      const data = await res.json();
+
+      if (!data.items?.length) {
+        setError("Video not found.");
+        return;
+      }
+
+      setVideo(data.items[0]);
+    } catch {
+      setError("Failed to fetch video data.");
+    }
+  };
+
+  const analyze = async () => {
+    if (!audience || !swipe) {
+      alert("Enter both Audience Retention and Swipe Away percentage.");
+      return;
+    }
+
+    if (audience < 1 || audience > 100 || swipe < 1 || swipe > 100) {
+      alert("Values must be between 1 and 100.");
+      return;
+    }
+
+    const duration = getSeconds(video.contentDetails.duration);
+    const watchTime = Math.round((duration * audience) / 100);
+    setWatchTime(formatDuration(watchTime));
+
+    try {
+      const res = await fetch("http://localhost:8080/analysis/short", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ar: Number(audience),
+          sa: Number(swipe),
+        }),
+      });
+
+      const data = await res.json();
+      setResult(data.result);
+    } catch {
+      setResult("Server error occurred");
+    }
   };
 
   return (
@@ -93,91 +93,69 @@ localStorage.setItem(
       <div className="input-row">
         <input
           className="video-input"
-          value={urlInput}
-          onChange={(e) => setUrlInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleFetch()}
-          placeholder="Paste YouTube Shorts link or ID"
+          placeholder="Paste YouTube Shorts link only"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
         />
-        <button className="fetch-btn" onClick={handleFetch}>
-          Fetch
+        <button className="fetch-btn" onClick={fetchVideo}>
+          Analyze Now
         </button>
       </div>
 
       {error && <p className="error">{error}</p>}
-      {loading && <p>Loading...</p>}
-
-      {!video && !loading && !error && (
-        <p className="empty-note">
-          Enter YouTube Shorts link and click Fetch
-        </p>
-      )}
 
       {video && (
         <div className="video-card">
-         
           <img
-            src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-            alt="Shorts Thumbnail"
             className="thumbnail"
+            src={`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`}
+            alt="thumbnail"
           />
 
           <h2>{video.snippet.title}</h2>
 
-          <p
-            className={`desc ${
-              !showFullDesc && video.snippet.description.length > 240
-                ? "collapsed"
-                : ""
-            }`}
-          >
-            {showFullDesc
-              ? video.snippet.description
-              : video.snippet.description.slice(0, 240)}
-          </p>
-
-          {video.snippet.description.length > 240 && (
-            <button
-              className="desc-toggle"
-              onClick={() => setShowFullDesc(!showFullDesc)}
-            >
-              {showFullDesc ? "Show less" : "Show more"}
-            </button>
-          )}
-
           <div className="stats">
-            <span>
-              👁 Views:{" "}
-              {Number(video.statistics.viewCount).toLocaleString()}
-            </span>
-            <span>
-              👍 Likes:{" "}
-              {video.statistics.likeCount
-                ? Number(video.statistics.likeCount).toLocaleString()
-                : "N/A"}
-            </span>
-            <span>
-              ⏱ Duration:{" "}
-              {formatDuration(getSeconds(video.contentDetails.duration))}
-            </span>
+            <span>👁 {video.statistics.viewCount}</span>
+            <span>👍 {video.statistics.likeCount}</span>
+            <span>⏱ {formatDuration(getSeconds(video.contentDetails.duration))}</span>
           </div>
 
-          <div className="actions">
-            <button
-              className="link-btn"
-              onClick={() =>
-                window.open(
-                  `https://www.youtube.com/shorts/${videoId}`,
-                  "_blank"
-                )
-              }
-            >
-              Open Shorts
-            </button>
+          <div className="analysis-inputs">
+            <input className="input-video"
+              type="number"
+              placeholder="Audience Retention (%)"
+              value={audience}
+              onChange={(e) => setAudience(e.target.value)}
+            />
+
+            <input className="input-video"
+              type="number"
+              placeholder="Swiped Away (%)"
+              value={swipe}
+              onChange={(e) => setSwipe(e.target.value)}
+            />
           </div>
+
+          <button className="fetch-btn" onClick={analyze}>
+            Analyze Performance
+          </button>
+
+          {watchTime && (
+  <div className="result-container">
+    <h3 className="result-title">📊 Analysis Result</h3>
+
+    <div className="result-box">
+      <p>
+        ⏱ <strong>Watch Time:</strong> {watchTime}
+      </p>
+      <p>
+        📈 <strong>Performance:</strong> {result}
+      </p>
+    </div>
+  </div>
+)}
         </div>
       )}
     </div>
   );
-};
-
-export default ShortsAnalytics;
+}

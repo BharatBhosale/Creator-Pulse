@@ -34,8 +34,8 @@ const Navbar = ({
           ☰
         </button>
         <div className="nav-l">
-          <span className="icon">▶</span>
-          <span className="app-name">Creator Pulse</span>
+          <span className="icon"><img src="/Image/youtube.png" alt="YouTube Logo" /></span>
+          <span className="app-name"><img src="/Image/name.png" alt="website name" /></span>
         </div>
 
         <div className="nav-r">
