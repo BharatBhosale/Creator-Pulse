@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be2c9881-c5d7-47ac-80c2-40710f412213" name="Changes" comment="code refactor">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/creator-pulse/backend/creater-pulse/src/main/java/com/mit/service/AnalyticsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/creator-pulse/backend/creater-pulse/src/main/java/com/mit/service/AnalyticsService.java" afterDir="false" />
-    </list>
+    <list default="true" id="be2c9881-c5d7-47ac-80c2-40710f412213" name="Changes" comment="code refactor" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

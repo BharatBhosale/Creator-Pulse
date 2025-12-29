@@ -7,14 +7,12 @@
   margin-bottom: 20px;
 }
 
-/* Vertical layout */
 .blog-grid {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-/* Blog card */
 .blog-card {
   background: #ffffff;
   padding: 20px;
@@ -27,7 +25,6 @@
   transform: translateY(-3px);
 }
 
-/* Blog image */
 .blog-card img {
   width: 100%;
   height: 200px;
@@ -35,14 +32,12 @@
   border-radius: 10px;
 }
 
-/* Blog title */
 .blog-card h3 {
   margin-top: 12px;
   font-size: 20px;
   color: #111;
 }
 
-/* Blog description */
 .blog-text {
   margin-top: 8px;
   font-size: 15px;
@@ -50,7 +45,6 @@
   line-height: 1.6;
 }
 
-/* Read button */
 .read-btn {
   margin-top: 12px;
   padding: 8px 14px;

@@ -162,7 +162,6 @@ n.input-row {
   margin: 5px;
 }
 
-/* subtle animation */
 @keyframes fadeIn {
   from {
     opacity: 0;

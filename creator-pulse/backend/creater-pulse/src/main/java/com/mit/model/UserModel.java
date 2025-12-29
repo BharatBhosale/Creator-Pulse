@@ -3,7 +3,7 @@ package com.mit.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user")   // change table name if different
+@Table(name = "user")   
 public class UserModel {
 
     @Id
