@@ -28,11 +28,11 @@ const AuthModal = ({ setIsLoggedIn, setNavSelection }) => {
       const text = await response.text();
 
       if (!response.ok) {
-        alert(text); // shows backend error
+        alert(text); 
         return;
       }
 
-      // ✅ SUCCESS
+    
       const data = JSON.parse(text);
 
       if (isLogin) {

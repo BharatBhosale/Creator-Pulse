@@ -24,15 +24,15 @@ const RegisterPage = ({ setIsLoggedIn, setNavSelection }) => {
       body: JSON.stringify(payload),
     });
 
-    const text = await response.text(); // get raw response
+    const text = await response.text(); 
 
-    // 🔥 IMPORTANT FIX
+    
     if (!response.ok) {
-      alert(text); // show backend message
+      alert(text); 
       return;
     }
 
-    // Success case
+    
     alert("Registration successful! Please login.");
     setNavSelection("LogIn");
 

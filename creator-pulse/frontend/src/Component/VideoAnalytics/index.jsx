@@ -128,7 +128,7 @@ const ShortsAnalytics = () => {
             <span>⏱ {formatDuration(getSeconds(video.contentDetails.duration))}</span>
           </div>
 
-          {/* USER INPUT */}
+        
           <div className="stats">
             <input className="input-video"
               type="number"
@@ -148,7 +148,6 @@ const ShortsAnalytics = () => {
             Analyze Performance
           </button>
 
-          {/* RESULTS */}
           {(watchTime || result) && (
   <div className="result-box-video">
     <h3 className="result-title-video">📊 Analysis Result</h3>

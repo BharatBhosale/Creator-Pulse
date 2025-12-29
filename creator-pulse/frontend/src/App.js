@@ -14,7 +14,7 @@ import AuthModal from "./Component/Log-in";
 import RegisterPage from "./Component/RegisterPage"; 
 
 function App() {
-  const [, setIsBlogVisible] = useState(true);
+  const [Isblogvisible, setIsBlogVisible] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [navSelection, setNavSelection] = useState("Home");
   console.log("App Nav Selection:", navSelection);
